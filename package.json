@@ -1,0 +1,32 @@
+{
+	"name": "vessel",
+	"version": "1.0.0",
+	"description": "Docker vessel",
+	"main": "main.js",
+	"scripts": {
+		"start": "npm run parcel && electron .",
+		"electron": "electron .",
+		"parcel": "rimraf dist && parcel build ./windows/index.html --public-url ./ --no-minify --target electron",
+		"web": "parcel ./windows/index.html -d build --open"
+	},
+	"repository": "https://github.com/codefoxes/vessel",
+	"keywords": [
+		"Electron",
+		"docker"
+	],
+	"author": "Codefoxes",
+	"license": "GPL3",
+	"devDependencies": {
+		"@vue/component-compiler-utils": "^2.5.2",
+		"electron": "^4.0.4",
+		"node-sass": "^4.11.0",
+		"parcel-bundler": "^1.11.0",
+		"rimraf": "^2.6.3",
+		"vue-template-compiler": "^2.6.6"
+	},
+	"dependencies": {
+		"grid-kit": "git://github.com/codefoxes/grid-kit.git#kart",
+		"vue": "^2.6.6",
+		"vue-hot-reload-api": "^2.3.2"
+	}
+}

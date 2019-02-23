@@ -1,0 +1,6 @@
+{
+	"name": "Test Plugin",
+	"loaders": {
+		"addProject": "addProject"
+	}
+}

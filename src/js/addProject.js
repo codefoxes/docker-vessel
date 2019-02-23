@@ -1,6 +1,8 @@
 import { remote as electron, ipcRenderer as ipc } from 'electron'
 import fs from 'graceful-fs'
 
+import plugins from './plugins'
+
 const userPath = electron.app.getPath('userData')
 const fileName = 'vessel-config.json'
 let config = { projects: [] }
@@ -11,6 +13,8 @@ try {
 } catch (err) {
 	// Reading config failed.
 }
+
+plugins.loadFor('addProject').init('test')
 
 console.log(userPath)
 

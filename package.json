@@ -30,6 +30,7 @@
 	"dependencies": {
 		"graceful-fs": "^4.1.15",
 		"grid-kit": "git://github.com/codefoxes/grid-kit.git#kart",
+		"requirejs": "^2.3.6",
 		"vue": "^2.6.6",
 		"vue-hot-reload-api": "^2.3.2",
 		"vuex": "^3.1.0"

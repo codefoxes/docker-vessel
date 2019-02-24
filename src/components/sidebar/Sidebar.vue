@@ -1,22 +1,20 @@
 <template>
-	<div class="sidebar">
+	<aside class="sidebar">
 		<ul class="list">
 			<li @click="addProject">Add Project</li>
 			<li v-for="project in projects" :key="project.name" @click="selectProject( project.name )">{{ project.name }}</li>
 			<li @click="send">Default</li>
 		</ul>
 		<ul class="list" v-if="currentProject !== ''">
+			<li @click="editProject">Edit Project</li>
 			<li @click="addService">Add Service</li>
+			<li v-for="service in services">{{ service.name }}</li>
 		</ul>
-	</div>
+	</aside>
 </template>
 
 <script>
-import { remote as electron, ipcRenderer as ipc } from 'electron'
-import fs from 'graceful-fs'
-
-const userPath = electron.app.getPath('userData')
-const fileName = 'vessel-config.json'
+import { ipcRenderer as ipc } from 'electron'
 
 export default {
 	name: 'Sidebar',
@@ -28,13 +26,14 @@ export default {
 		}
 	},
 
-	created () {
-		try {
-			const configContent = fs.readFileSync(`${userPath}/${fileName}`, 'utf8')
-			this.projects = JSON.parse(configContent).projects
-		} catch (err) {
-			// Reading config failed.
+	computed: {
+		services () {
+			return this.$store.state.compose.services
 		}
+	},
+
+	created () {
+		this.projects = this.$store.getters['config/getConfig']('projects')
 	},
 
 	methods: {
@@ -43,7 +42,11 @@ export default {
 		},
 
 		addService () {
-			this.$emit('addService', this.currentProject)
+			this.$store.dispatch('content/changeState', 'addService')
+		},
+
+		editProject () {
+			this.$store.dispatch('content/changeState', 'editProject')
 		},
 
 		send () {
@@ -51,6 +54,7 @@ export default {
 		},
 
 		selectProject (projectName) {
+			this.$store.dispatch('project/changeProject', projectName)
 			this.currentProject = projectName
 		}
 	}

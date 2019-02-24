@@ -1,22 +1,41 @@
 @import "../../node_modules/grid-kit/scss/grid-kit";
+@import "variables";
 @import "sidebar";
+@import "main-content";
+
+html, body, #home {
+    height: 100%;
+}
 
 body {
 	font-size: .87rem;
 	font-family: system,-apple-system,".SFNSDisplay-Regular","Helvetica Neue",Helvetica,"Segoe UI",sans-serif;
 }
 
-#home {
-	.main {
-		display: flex;
-	}
-}
-
-header {
+header.topbar {
 	-webkit-user-select: none;
 	-webkit-app-region: drag;
 	background: #fff;
 	border-bottom: 1px solid #ccc;
+	position: fixed;
+    width: 100%;
+	height: $main_header_height;
+}
+
+#home {
+	.main {
+		height: 100%;
+		display: flex;
+		padding-top: 20px;
+
+		& > .sidebar {
+			height: 100%;
+		}
+
+		& > .content {
+			flex-grow: 1;
+		}
+	}
 }
 
 .sidebar {
@@ -28,17 +47,5 @@ header {
 	li {
 		padding: 10px 0;
     	border-bottom: 1px solid #ccc;
-	}
-}
-
-.content {
-	.images-list {
-		padding: 10px;
-
-		.image {
-			padding: 20px;
-			background: #efefef;
-			cursor: pointer;
-		}
 	}
 }

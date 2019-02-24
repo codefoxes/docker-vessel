@@ -11,6 +11,7 @@ const state = {
 
 // getters
 const getters = {
+	getConfig: state => name => state.all[name]
 }
 
 // actions

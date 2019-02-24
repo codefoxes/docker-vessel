@@ -1,0 +1,40 @@
+.add-service {
+	.images-list {
+		padding: 10px;
+
+		.image {
+			padding: 20px;
+			background: #efefef;
+			cursor: pointer;
+		}
+	}
+}
+
+.edit-project {
+	height: 100%;
+
+	header {
+		height: $edit_header_height;
+
+		button {
+			float: right;
+			background: #23d160;
+			color: #fff;
+			border: none;
+			padding: 5px 10px;
+			border-radius: 4px;
+			margin: 7px;
+			outline: none;
+			cursor: pointer;
+		}
+	}
+
+	.vue-codemirror {
+		height: calc(100% - #{$edit_header_height});
+        font-size: 1rem;
+
+		.CodeMirror {
+			height: 100%;
+		}
+	}
+}

@@ -28,6 +28,7 @@
 		"vue-template-compiler": "^2.6.6"
 	},
 	"dependencies": {
+		"axios": "^0.18.0",
 		"graceful-fs": "^4.1.15",
 		"grid-kit": "git://github.com/codefoxes/grid-kit.git#kart",
 		"js-yaml": "^3.12.1",

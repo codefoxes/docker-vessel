@@ -1,13 +1,25 @@
 <template>
 	<section class="content">
-		<div v-if="currentState === 'addService'" class="add-service grid cols-2">
-			<input class="col-2" type="text" placeholder="Search Images">
-			<div class="images-list col-2 grid cols-2 gap-1">
+		<div v-if="currentState === 'addService'" class="add-service">
+			<header>
+				<input class="col-2" type="text" placeholder="Search Images"
+					v-model="input"
+					@input="searchImage">
+			</header>
+			<div v-if="showDefault" class="images-list col-2 grid cols-2 gap-1">
 				<div class="image"
-					v-for="image in images"
+					v-for="image in defaultImages"
 					:key="image.name"
 					@click="selectImage(image.name)">
 					{{ image.title }}
+				</div>
+			</div>
+			<div v-if="!showDefault" class="images-list col-2 grid cols-2 gap-1">
+				<div class="image"
+					v-for="image in images"
+					:key="image.slug"
+					@click="selectImage(image.slug)">
+					{{ image.name }}
 				</div>
 			</div>
 		</div>
@@ -25,6 +37,8 @@
 
 <script>
 import { codemirror } from 'vue-codemirror'
+import axios from 'axios'
+import { debounce } from '../../js/lib/helpers'
 
 export default {
 	name: 'MainContent',
@@ -47,7 +61,7 @@ export default {
 				line: true,
 				smartIndent: true
 			},
-			images: [
+			defaultImages: [
 				{
 					title: 'Ubuntu',
 					name: 'ubuntu'
@@ -64,7 +78,10 @@ export default {
 					title: 'Adminer',
 					name: 'adminer'
 				}
-			]
+			],
+			images: [],
+			input: '',
+			showDefault: true
 		}
 	},
 
@@ -97,6 +114,30 @@ export default {
 
 		saveProject () {
 			this.$store.dispatch('compose/saveCompose')
+		},
+
+		searchImage () {
+			const search = debounce(() => {
+				if (this.input === '') {
+					this.showDefault = true
+					return
+				}
+
+				const url = `https://hub.docker.com/api/content/v1/products/search?` +
+					`image_filter=store%2Cofficial&q=${this.input}&page=1&page_size=10`
+				// const url = `https://hub.docker.com/api/content/v1/products/search?` +
+				// `source=community&q=${this.input}&page=1&page_size=4`
+				axios.get(url)
+					.then((response) => {
+						this.showDefault = false
+						this.images = response.data.summaries.filter(img => img.type === 'image')
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			}, 1000)
+
+			search()
 		}
 	}
 }

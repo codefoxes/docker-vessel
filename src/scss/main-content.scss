@@ -1,6 +1,13 @@
 .add-service {
+	height: 100%;
+
+	header {
+		height: $add_service_header_height;
+	}
+
 	.images-list {
 		padding: 10px;
+		height: calc(100% - #{$add_service_header_height});
 
 		.image {
 			padding: 20px;
